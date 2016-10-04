@@ -1,7 +1,7 @@
 package servlets;
 
 import java.io.IOException;
-import java.util.ArrayList;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -63,39 +63,62 @@ public class servicios extends HttpServlet {
 			
 			double saldo = serv.buscarTarjeta(tarjeta);
 			
+			System.out.println("salio de la webada");
+			
+			ResponseObject responseobj=null;
+			
 			if(saldo!=-1){
 				
+				System.out.println(saldo-monto);
 				tarjeta.setSaldo(saldo-monto);
 				
+				if(serv.realizarTransaccion(tarjeta)){
+					
+					responseobj=new ResponseObject();
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					responseobj.setSuccess(true);
+					responseobj.setObject("APROBADO");
+					
+				}else{
+					
+					responseobj=new ResponseObject();
+					response.setContentType("application/json");
+					response.setCharacterEncoding("UTF-8");
+					responseobj.setSuccess(true);
+					responseobj.setObject("NO APROBADO");
+
+					
+					
+				}
+				
+				response.getWriter().write(new Gson().toJson(responseobj));
+				System.out.println("json" + new Gson().toJson(responseobj));
 				
 				
 			}else{
 				
-			}
-			
-			/*ResponseObject responseobj=null;
-			if(departamentos!=null){
+				
+
 				responseobj=new ResponseObject();
 				response.setContentType("application/json");
 				response.setCharacterEncoding("UTF-8");
 				responseobj.setSuccess(true);
-				responseobj.setObject(departamentos);
+				responseobj.setObject("NO TARJETA");
+				
+				
+				response.getWriter().write(new Gson().toJson(responseobj));
+				System.out.println("json" + new Gson().toJson(responseobj));
+				
+				
 			}
-			response.getWriter().write(new Gson().toJson(responseobj));
-			System.out.println("json" + new Gson().toJson(responseobj));
 			
-			*/
+			
 		}
 		
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 
-	}
 		
 }

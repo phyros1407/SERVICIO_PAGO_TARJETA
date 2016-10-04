@@ -15,37 +15,42 @@ public class servicesMySqlDAO extends MySqlDAOFactory implements servicesDAO{
 	public double buscarTarjeta(TarjetaBean tarjeta) {
 		// TODO Auto-generated method stub
 		
-		double saldoActual = 0;
+		
 		
 		try{
 
 			Connection con = MySqlDAOFactory.obtenerConexion();
 			Statement stmt = con.createStatement();
 			
-			String query = " SELECT SALDO "
+			String query = " SELECT * "
 						+  " FROM T_TARJETA "
 						+  " WHERE NUM_TAR = '"+tarjeta.getNum_tar()+"' AND CVC = '"+tarjeta.getCvc()+"' AND ANO_CAD = "+tarjeta.getAno_cad()+" AND MES_CAD = "+tarjeta.getMes_cad()+" ";
 			
+			System.out.println("QUERY EJECUTADO ----> "+query);
+			
 			ResultSet rs = stmt.executeQuery(query);
 			
-			if(!(rs.isFirst())){
-				saldoActual = -1;
+
+			if((rs.isFirst())){
+				return -1;
 			}else{
-				while(rs.next()){
-					saldoActual = rs.getDouble("1");
-				}
+			
+				return rs.getDouble("saldo");
+				
 			}
 			
 		}catch(Exception e){
 			e.getMessage();
 		}
 		
-		return saldoActual;
+		return 0;
 	}
 
 	@Override
 	public boolean realizarTransaccion(TarjetaBean tarjeta) {
 		// TODO Auto-generated method stub
+		
+		boolean flag = false;
 		
 		try{
 			
@@ -56,10 +61,19 @@ public class servicesMySqlDAO extends MySqlDAOFactory implements servicesDAO{
 						+  " SET SALDO = "+tarjeta.getSaldo()+" "
 						+  " WHERE NUM_TAR = '"+tarjeta.getNum_tar()+"'";
 			
+			System.out.println(query);
+			
+			int filas = stmt.executeUpdate(query);
+			
+			if(filas == 1){
+				flag = true;
+			}
+			
+			
 		}catch(Exception e){
 			e.getMessage();
 		}
-		return false;
+		return flag;
 	}
 	
 	
