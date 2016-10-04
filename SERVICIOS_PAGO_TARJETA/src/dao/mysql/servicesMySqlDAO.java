@@ -35,7 +35,7 @@ public class servicesMySqlDAO extends MySqlDAOFactory implements servicesDAO{
 				return -1;
 			}else{
 			
-				return rs.getDouble("saldo");
+				return rs.getDouble("6");
 				
 			}
 			
