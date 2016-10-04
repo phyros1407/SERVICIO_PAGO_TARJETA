@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import beans.TarjetaBean;
 import dao.factory.DAOFactory;
 import dao.interfaces.servicesDAO;
 import util.ResponseObject;
@@ -44,9 +45,33 @@ public class servicios extends HttpServlet {
 		
 		if(action.equalsIgnoreCase("pagos")){
 			
+			
+			String num_tar = request.getParameter("numero");
+			String cvc = request.getParameter("cvc");
+			int mes = Integer.parseInt(request.getParameter("mes"));
+			int anio = Integer.parseInt(request.getParameter("anio"));
+			double monto = Double.parseDouble(request.getParameter("monto"));
+			
+			TarjetaBean tarjeta = new TarjetaBean();
+			tarjeta.setNum_tar(num_tar);
+			tarjeta.setCvc(cvc);
+			tarjeta.setMes_cad(mes);
+			tarjeta.setAno_cad(anio);
+			
+			
 			System.out.println("hasta aca llego la webada");
 			
+			double saldo = serv.buscarTarjeta(tarjeta);
 			
+			if(saldo!=-1){
+				
+				tarjeta.setSaldo(saldo-monto);
+				
+				
+				
+			}else{
+				
+			}
 			
 			/*ResponseObject responseobj=null;
 			if(departamentos!=null){
