@@ -30,9 +30,8 @@ public class servicesMySqlDAO extends MySqlDAOFactory implements servicesDAO {
 
 			ResultSet rs = stmt.executeQuery(query);
 
-			if (!rs.isBeforeFirst()) {
-				
-				
+			if (!(rs.isBeforeFirst())) {
+
 				saldo = -1;
 
 			} else {
@@ -43,8 +42,6 @@ public class servicesMySqlDAO extends MySqlDAOFactory implements servicesDAO {
 					System.out.println("SALDO EN EL QUERY -----> " + saldo);
 				}
 				
-				
-
 			}
 
 			con.close();
