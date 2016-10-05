@@ -62,25 +62,17 @@ public class servicios extends HttpServlet {
 			System.out.println("hasta aca llego la webada");
 			
 			double saldo = serv.buscarTarjeta(tarjeta);
+			System.out.println("SALDO ACTUAL ---->"+saldo);
 			
 			System.out.println("salio de la webada");
 			
 			ResponseObject responseobj=null;
 			
-			if(saldo!=-1){
+			if(saldo!=-1.0){
 				
 				System.out.println(saldo-monto);
-				tarjeta.setSaldo(saldo-monto);
 				
-				if(serv.realizarTransaccion(tarjeta)){
-					
-					responseobj=new ResponseObject();
-					response.setContentType("application/json");
-					response.setCharacterEncoding("UTF-8");
-					responseobj.setSuccess(true);
-					responseobj.setObject("APROBADO");
-					
-				}else{
+				if(saldo-monto<0){
 					
 					responseobj=new ResponseObject();
 					response.setContentType("application/json");
@@ -89,7 +81,28 @@ public class servicios extends HttpServlet {
 					responseobj.setObject("NO APROBADO");
 
 					
-					
+				}else{
+
+					tarjeta.setSaldo(saldo-monto);
+
+					if(serv.realizarTransaccion(tarjeta)){
+						
+						responseobj=new ResponseObject();
+						response.setContentType("application/json");
+						response.setCharacterEncoding("UTF-8");
+						responseobj.setSuccess(true);
+						responseobj.setObject("APROBADO");
+						
+					}else{
+						
+						responseobj=new ResponseObject();
+						response.setContentType("application/json");
+						response.setCharacterEncoding("UTF-8");
+						responseobj.setSuccess(true);
+						responseobj.setObject("NO APROBADO");
+							
+					}
+				
 				}
 				
 				response.getWriter().write(new Gson().toJson(responseobj));
@@ -97,7 +110,6 @@ public class servicios extends HttpServlet {
 				
 				
 			}else{
-				
 				
 
 				responseobj=new ResponseObject();
