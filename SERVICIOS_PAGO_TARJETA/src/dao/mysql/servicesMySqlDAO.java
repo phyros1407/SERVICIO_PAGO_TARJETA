@@ -15,12 +15,16 @@ public class servicesMySqlDAO extends MySqlDAOFactory implements servicesDAO {
 	public double buscarTarjeta(TarjetaBean tarjeta) {
 		// TODO Auto-generated method stub
 
+		
+		
 		double saldo = 0;
 
 		try {
 
 			Connection con = MySqlDAOFactory.obtenerConexion();
 			Statement stmt = con.createStatement();
+			
+			
 
 			String query = " SELECT SALDO " + " FROM T_TARJETA " + " WHERE NUM_TAR = '" + tarjeta.getNum_tar()
 					+ "' AND CVC = '" + tarjeta.getCvc() + "' AND ANO_CAD = " + tarjeta.getAno_cad() + " AND MES_CAD = "
@@ -30,17 +34,27 @@ public class servicesMySqlDAO extends MySqlDAOFactory implements servicesDAO {
 
 			ResultSet rs = stmt.executeQuery(query);
 
+			System.out.println("VER PRIMERO DATO --->"+rs.absolute(0));
+			
 			if (!(rs.isBeforeFirst())) {
 
 				saldo = -1;
+				
+				con.close();
+				stmt.close();
+				rs.close();
 
 			} else {
 
 				if (rs.next()) {
 
-					saldo = rs.getDouble("saldo");
+					saldo = rs.getDouble("SALDO");
 					System.out.println("SALDO EN EL QUERY -----> " + saldo);
 				}
+				
+				con.close();
+				stmt.close();
+				rs.close();
 				
 			}
 
