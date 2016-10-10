@@ -26,42 +26,32 @@ public class servicesMySqlDAO extends MySqlDAOFactory implements servicesDAO {
 			
 			
 
-			String query = " SELECT SALDO " + " FROM t_tarjeta " + " WHERE NUM_TAR = '" + tarjeta.getNum_tar()
+			String query = " SELECT * " + " FROM t_tarjeta " + " WHERE NUM_TAR = '" + tarjeta.getNum_tar()
 					+ "' AND CVC = '" + tarjeta.getCvc() + "' AND ANO_CAD = " + tarjeta.getAno_cad() + " AND MES_CAD = "
 					+ tarjeta.getMes_cad() + " ";
 
 			System.out.println("QUERY EJECUTADO ----> " + query);
 
 			ResultSet rs = stmt.executeQuery(query);
-
-			System.out.println("VER PRIMERO DATO --->"+rs.absolute(0));
-			
-			if (!(rs.isBeforeFirst())) {
-
-				saldo = -1;
+		
+			if(rs.isBeforeFirst()){
 				
-				con.close();
-				stmt.close();
-				rs.close();
-
-			} else {
-
-				if (rs.next()) {
+				if(rs.next()){
 
 					saldo = rs.getDouble("SALDO");
-					System.out.println("SALDO EN EL QUERY -----> " + saldo);
+					
 				}
 				
-				con.close();
-				stmt.close();
-				rs.close();
 				
-			}
-
-			con.close();
-			stmt.close();
-			rs.close();
+			}else{
+				
+				saldo = -1;
 			
+			}
+					
+
+				
+	
 		} catch (Exception e) {
 			e.getMessage();
 		}
