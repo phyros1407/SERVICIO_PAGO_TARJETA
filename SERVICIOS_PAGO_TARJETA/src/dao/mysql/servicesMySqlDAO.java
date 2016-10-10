@@ -26,8 +26,8 @@ public class servicesMySqlDAO extends MySqlDAOFactory implements servicesDAO {
 			
 			
 
-			String query = " SELECT SALDO " + " FROM T_TARJETA " + " WHERE NUM_TAR = '" + tarjeta.getNum_tar()
-					+ "' AND CVC = '" + tarjeta.getCvc() + "' AND ANO_CAD = " + tarjeta.getAno_cad() + " AND MES_CAD = "
+			String query = " SELECT saldo " + " FROM t_tarjeta " + " WHERE num_tar = '" + tarjeta.getNum_tar()
+					+ "' AND cvc = '" + tarjeta.getCvc() + "' AND ano_cad = " + tarjeta.getAno_cad() + " AND mes_cad = "
 					+ tarjeta.getMes_cad() + " ";
 
 			System.out.println("QUERY EJECUTADO ----> " + query);
@@ -48,7 +48,7 @@ public class servicesMySqlDAO extends MySqlDAOFactory implements servicesDAO {
 
 				if (rs.next()) {
 
-					saldo = rs.getDouble("SALDO");
+					saldo = rs.getDouble("saldo");
 					System.out.println("SALDO EN EL QUERY -----> " + saldo);
 				}
 				
@@ -81,7 +81,7 @@ public class servicesMySqlDAO extends MySqlDAOFactory implements servicesDAO {
 			Connection con = MySqlDAOFactory.obtenerConexion();
 			Statement stmt = con.createStatement();
 
-			String query = " UPDATE T_TARJETA " + " SET SALDO = " + tarjeta.getSaldo() + " " + " WHERE NUM_TAR = '"
+			String query = " UPDATE t_tarjeta " + " SET saldo = " + tarjeta.getSaldo() + " " + " WHERE num_tar = '"
 					+ tarjeta.getNum_tar() + "'";
 
 			System.out.println(query);
