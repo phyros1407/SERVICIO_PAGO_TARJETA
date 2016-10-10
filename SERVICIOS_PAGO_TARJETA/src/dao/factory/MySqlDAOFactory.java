@@ -15,11 +15,15 @@ public class MySqlDAOFactory extends DAOFactory{
 		Connection conexion=null;
 		
 		 try {
+			 
 			Class.forName("com.mysql.jdbc.Driver");
 			String url="jdbc:mysql://mysql19087-servicios.j.facilcloud.com/bd_pago_tarjeta";
 			conexion = DriverManager.getConnection(url,"root","ETSllh90734");
+			
 		} catch (Exception e) {
+			
 			System.out.println(e.getMessage());
+			
 		}
 		 
 		return conexion;
