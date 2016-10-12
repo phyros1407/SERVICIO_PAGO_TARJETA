@@ -45,7 +45,8 @@ public class servicios extends HttpServlet {
 		
 		if(action.equalsIgnoreCase("pagos")){
 			
-			
+			String tip_tar = request.getParameter("tip_tar");
+			String mar_tar = request.getParameter("mar_tar");
 			String num_tar = request.getParameter("numero");
 			String cvc = request.getParameter("cvc");
 			int mes = Integer.parseInt(request.getParameter("mes"));
@@ -53,6 +54,8 @@ public class servicios extends HttpServlet {
 			double monto = Double.parseDouble(request.getParameter("monto"));
 			
 			TarjetaBean tarjeta = new TarjetaBean();
+			tarjeta.setTip_tar(tip_tar);
+			tarjeta.setMar_tar(mar_tar);
 			tarjeta.setNum_tar(num_tar);
 			tarjeta.setCvc(cvc);
 			tarjeta.setMes_cad(mes);
